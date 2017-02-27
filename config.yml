@@ -1,0 +1,6 @@
+name: 複数カテゴリ検索プラグイン
+code: CategoriesSearch
+version: 1.0.0
+event: CategoriesSearchEvent
+service:
+    - CategoriesSearchServiceProvider
