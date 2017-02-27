@@ -30,6 +30,21 @@ class CategoriesSearchEvent
         $this->app = $app;
     }
 
+    public function onFrontProductIndexInitialize(EventArgs $event)
+    {
+        $builder = $event->getArgument('builder');
+        $builder->add('category_ids', 'entity', array(
+            'class' => 'Eccube\Entity\Category',
+            'property' => 'NameWithLevel',
+            'choices' => $Categories,
+            'empty_value' => '全ての商品',
+            'empty_data' => null,
+            'required' => false,
+            'label' => '商品カテゴリから選ぶ',
+            'multiple' => true
+        ));
+    }
+    
     public function onFrontProductIndexSearch(EventArgs $event)
     {
     }

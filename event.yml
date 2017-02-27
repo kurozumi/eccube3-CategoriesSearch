@@ -1,2 +1,4 @@
+front.product.index.initialize:
+    - [onFrontProductIndexInitialize, NORMAL]
 front.product.index.search:
     - [onFrontProductIndexSearch, NORMAL]
