@@ -35,8 +35,6 @@ class CategoriesSearchEvent
         $builder = $event->getArgument('builder');
         $builder->add('category_ids', 'entity', array(
             'class' => 'Eccube\Entity\Category',
-            'property' => 'NameWithLevel',
-            'choices' => $Categories,
             'empty_value' => '全ての商品',
             'empty_data' => null,
             'required' => false,
@@ -44,9 +42,28 @@ class CategoriesSearchEvent
             'multiple' => true
         ));
     }
-    
+
     public function onFrontProductIndexSearch(EventArgs $event)
     {
+        $searchData = $event->getArgument('searchData');
+        $qb = $event->getArgument('qb');
+
+        // category
+        if (!empty($searchData['category_ids']) && $searchData['category_ids']) {
+
+            $Categories = array();
+            foreach ($searchData['category_ids'] as $Category) {
+                $Categories[] = $Category->getId();
+            }
+
+            if ($Categories) {
+                $qb
+                        ->innerJoin('p.ProductCategories', 'pct')
+                        ->innerJoin('pct.Category', 'c')
+                        ->andWhere($qb->expr()->in('pct.Category', ':Categories'))
+                        ->setParameter('Categories', $Categories);
+            }
+        }
     }
 
 }
