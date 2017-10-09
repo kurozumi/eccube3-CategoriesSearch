@@ -38,7 +38,6 @@ class CategoriesSearchEvent
             'empty_value' => '全ての商品',
             'empty_data' => null,
             'required' => false,
-            'label' => '商品カテゴリから選ぶ',
             'multiple' => true
         ));
     }
